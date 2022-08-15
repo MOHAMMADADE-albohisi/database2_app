@@ -1,0 +1,16 @@
+{
+"login_title": "Welcome to back....",
+"login_subtitle": "Enter Email & Password",
+"login": "Login",
+"email" : "email",
+"password" : "Passsword",
+"error" : "Entar required Data! ",
+"logut" : "Confarm Logout ",
+"sublogute" : "Are you suar",
+"confarm" : "Confarm",
+"cancel" : "Cancel",
+"home" : "Home",
+"language_title" : "Change Language",
+"languagesub_title" : "Choos suitable Language"
+
+}
