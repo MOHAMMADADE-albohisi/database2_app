@@ -1,0 +1,16 @@
+{
+"login_title": "Bienvenue à dos....",
+"login_subtitle": "Entrez l'e-mail et le mot de passe",
+"login": "Connexion",
+"email" : "e-mail",
+"password" : "Mot de passe",
+"error" : "Saisie obligatoire Données ! ",
+"logut" : "Confirmer la déconnexion ",
+"sublogute" : "Êtes-vous sûr",
+"confarm" : "Confarm",
+"cancel" : "Annuler",
+"home" : "Maison",
+"language_title" : "Changer de langue",
+"languagesub_title" : "Choisit la langue appropriée"
+
+}

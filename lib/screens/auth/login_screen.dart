@@ -1,9 +1,12 @@
+import 'package:database_app/provider/language_provider.dart';
+import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:database_app/snakbars/helpin_screen.dart';
 import 'package:database_app/widgets/test_filde_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 // ignore: camel_case_types
 class login_screen extends StatefulWidget {
@@ -18,13 +21,13 @@ class _login_screenState extends State<login_screen> with Helpers {
   late TextEditingController _email;
   late TextEditingController _password;
   late bool showpasssword = true;
-  String _language = 'en';
+  late String _language;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    _language = SharedPreftest().getValueFor(savedata.language.name) ?? 'en';
     _email = TextEditingController();
     _password = TextEditingController();
   }
@@ -114,74 +117,101 @@ class _login_screenState extends State<login_screen> with Helpers {
     );
   }
 
-  void _showLanguage() {
-    showModalBottomSheet(
+  void _showLanguage() async {
+    String? langchangetest = await showModalBottomSheet<String>(
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topRight: Radius.circular(15),
-        topLeft: Radius.circular(15),
-      )),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+        ),
+      ),
       clipBehavior: Clip.antiAlias,
       context: (context),
       builder: (context) {
         return BottomSheet(
           onClosing: () {},
           builder: (context) {
-            return StatefulBuilder(builder: ((context, setState) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 15.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.language_title,
-                      style: GoogleFonts.cairo(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.languagesub_title,
-                      style: GoogleFonts.cairo(
-                          height: 1.0,
-                          fontSize: 14.sp,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    Divider(),
-                    RadioListTile<String>(
-                      title: Text(
-                        'English',
-                        style: GoogleFonts.cairo(),
+            return StatefulBuilder(
+              builder: ((context, setState) {
+                return Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 25.w, vertical: 15.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.language_title,
+                        style: GoogleFonts.cairo(
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
-                      value: 'en',
-                      groupValue: _language,
-                      onChanged: (String? value) {
-                        if (value != null) {
-                          setState(() => _language = value);
-                        }
-                      },
-                    ),
-                    RadioListTile<String>(
-                      title: Text(
-                        'العربية',
-                        style: GoogleFonts.cairo(),
+                      Text(
+                        AppLocalizations.of(context)!.languagesub_title,
+                        style: GoogleFonts.cairo(
+                            height: 1.0,
+                            fontSize: 14.sp,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w300),
                       ),
-                      value: 'ar',
-                      groupValue: _language,
-                      onChanged: (String? value) {
-                        if (value != null) {
-                          setState(() => _language = value);
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }));
+                      const Divider(),
+                      RadioListTile<String>(
+                        title: Text(
+                          'English',
+                          style: GoogleFonts.cairo(),
+                        ),
+                        value: 'en',
+                        groupValue: _language,
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            setState(() => _language = value);
+                            Navigator.pop(context, 'en');
+                          }
+                        },
+                      ),
+                      RadioListTile<String>(
+                        title: Text(
+                          'العربية',
+                          style: GoogleFonts.cairo(),
+                        ),
+                        value: 'ar',
+                        groupValue: _language,
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            setState(() => _language = value);
+                            Navigator.pop(context, 'ar');
+                          }
+                        },
+                      ),
+                      RadioListTile<String>(
+                        title: Text(
+                          'Français',
+                          style: GoogleFonts.cairo(),
+                        ),
+                        value: 'fa',
+                        groupValue: _language,
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            setState(() => _language = value);
+                            Navigator.pop(context, 'fa');
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            );
           },
         );
       },
     );
+
+    if (langchangetest != null) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Provider.of<LanguageProvider>(context, listen: false)
+            .changeLanguage(langchangetest);
+      });
+    }
   }
 
   void performlogin() {
@@ -200,6 +230,7 @@ class _login_screenState extends State<login_screen> with Helpers {
   }
 
   void login() {
+    SharedPreftest().saveemail(email: _email.text);
     Navigator.pushReplacementNamed(context, '/home_screen');
   }
 }

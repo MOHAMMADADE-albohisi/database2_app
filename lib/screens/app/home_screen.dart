@@ -1,3 +1,4 @@
+import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,7 +30,7 @@ class _home_screenState extends State<home_screen> {
   }
 
   void _confirmeLogoute() async {
-    bool ? test = await showDialog <bool>(
+    bool? test = await showDialog<bool>(
       //***********************************************
       //لعدم اغلاق الايقونة من الضغط خارجها
       // barrierDismissible: false,
@@ -57,8 +58,7 @@ class _home_screenState extends State<home_screen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context,true);
-
+                Navigator.pop(context, true);
               },
               child: Text(
                 AppLocalizations.of(context)!.confarm,
@@ -70,7 +70,7 @@ class _home_screenState extends State<home_screen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context,false);
+                Navigator.pop(context, false);
               },
               child: Text(
                 AppLocalizations.of(context)!.cancel,
@@ -84,9 +84,13 @@ class _home_screenState extends State<home_screen> {
         );
       },
     );
-    if(test ?? false){
-      Navigator.pushReplacementNamed(context, '/login_screen');
-
+    if (test ?? false) {
+      bool remove =
+          // await SharedPreftest().removeValueFor(savedata.logedInd.name);
+          await SharedPreftest().claer();
+      if (remove) {
+        Navigator.pushReplacementNamed(context, '/login_screen');
+      }
     }
   }
 }

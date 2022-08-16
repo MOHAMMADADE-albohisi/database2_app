@@ -1,3 +1,4 @@
+import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,8 +16,11 @@ class _lunch_screenState extends State<lunch_screen> {
     super.initState();
     Future.delayed(
       Duration(seconds: 3),
-          () {
-        Navigator.pushReplacementNamed(context, '/login_screen');
+      () {
+        bool loggedIn =
+            SharedPreftest().getValueFor<bool>(savedata.logedInd.name) ?? false;
+        String routes = loggedIn ? '/home_screen' : '/login_screen';
+        Navigator.pushReplacementNamed(context, routes);
       },
     );
   }
