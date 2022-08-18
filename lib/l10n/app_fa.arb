@@ -11,6 +11,12 @@
 "cancel" : "Annuler",
 "home" : "Maison",
 "language_title" : "Changer de langue",
-"languagesub_title" : "Choisit la langue appropriée"
+"languagesub_title" : "Choisit la langue appropriée",
+"name" : "Le nom",
+"register" : "Créer un nouveau compte",
+"new_account" : "Donut have a account ?"
+
+
+
 
 }

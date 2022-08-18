@@ -11,6 +11,16 @@
 "cancel" : "Cancel",
 "home" : "Home",
 "language_title" : "Change Language",
-"languagesub_title" : "Choos suitable Language"
+"languagesub_title" : "Choos suitable Language",
+"name" : "name",
+
+"register" : "Register",
+"register_title" : "Create Account new...",
+"regester_subtitle": "Enter info below",
+
+"new_account": "Donut have a account ?"
+
+
+
 
 }

@@ -1,7 +1,8 @@
 // ignore_for_file: camel_case_types
+import 'package:database_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum savedata { language, email, logedInd }
+enum savedata { language, name, email, logedInd }
 
 class SharedPrefController {
   SharedPrefController._();
@@ -18,12 +19,13 @@ class SharedPrefController {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  void saveemail({required String email}) {
+  void save({required User user}) {
     _sharedPreferences.setBool(savedata.logedInd.name, true);
-    _sharedPreferences.setString(savedata.email.name, email);
+    _sharedPreferences.setString(savedata.name.name, user.name);
+    _sharedPreferences.setString(savedata.email.name, user.email);
   }
 
-  void savelanguage({required String langchang}) {
+  void savelanguage({required String langchang}) {  
     _sharedPreferences.setString(savedata.language.name, langchang);
   }
 

@@ -1,5 +1,8 @@
+import 'package:database_app/database/controllers/user_db_controller.dart';
+import 'package:database_app/models/process_response.dart';
 import 'package:database_app/provider/language_provider.dart';
 import 'package:database_app/shared_preferences/shared_preferences.dart';
+import 'package:database_app/snakbars/context_extenssion.dart';
 import 'package:database_app/snakbars/helpin_screen.dart';
 import 'package:database_app/widgets/test_filde_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +30,8 @@ class _login_screenState extends State<login_screen> with Helpers {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _language = SharedPrefController().getValueFor(savedata.language.name) ?? 'en';
+    _language =
+        SharedPrefController().getValueFor(savedata.language.name) ?? 'en';
     _email = TextEditingController();
     _password = TextEditingController();
   }
@@ -111,6 +115,17 @@ class _login_screenState extends State<login_screen> with Helpers {
                 style: GoogleFonts.cairo(),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(AppLocalizations.of(context)!.new_account),
+                TextButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, '/register_screen'),
+                  child: Text(AppLocalizations.of(context)!.register),
+                )
+              ],
+            )
           ],
         ),
       ),
@@ -229,8 +244,15 @@ class _login_screenState extends State<login_screen> with Helpers {
     return false;
   }
 
-  void login() {
-    SharedPrefController().saveemail(email: _email.text);
-    Navigator.pushReplacementNamed(context, '/home_screen');
+  void login() async {
+    processResponse ProcessResponse = await UserDbController()
+        .login(email: _email.text, password: _password.text);
+    if (ProcessResponse.success) {
+      Navigator.pushReplacementNamed(context, '/home_screen');
+    }
+    context.showSnakBar(
+      messageerroe: ProcessResponse.message,
+      error: !ProcessResponse.success,
+    );
   }
 }

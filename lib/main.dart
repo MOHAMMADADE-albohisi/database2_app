@@ -1,7 +1,9 @@
 // ignore_for_file: camel_case_types
+import 'package:database_app/database/db_controller.dart';
 import 'package:database_app/provider/language_provider.dart';
 import 'package:database_app/screens/app/home_screen.dart';
 import 'package:database_app/screens/auth/login_screen.dart';
+import 'package:database_app/screens/auth/regester_screen.dart';
 import 'package:database_app/screens/core/lunch_screen.dart';
 import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefController().initPreferTest();
+  await DbController().initDatabase();
   runApp(const database_app());
 }
 
@@ -63,6 +66,7 @@ class database_app extends StatelessWidget {
               routes: {
                 '/lunch_screen': (context) => const lunch_screen(),
                 '/login_screen': (context) => const login_screen(),
+                '/register_screen': (context) => const register_screen(),
                 '/home_screen': (context) => const home_screen(),
               },
             );

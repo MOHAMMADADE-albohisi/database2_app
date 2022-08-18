@@ -11,5 +11,12 @@
 "cancel" : "الغاء",
 "home" : "الرئيسية",
 "language_title" : "تغير الللغة",
-"languagesub_title" : "أخترا اللغة المناسبة "
+"languagesub_title" : "أخترا اللغة المناسبة ",
+"register" : "انشاء حساب ",
+"register_title" : "إانشاء حساب جديد",
+"regester_subtitle": "ادخل البيانات ادناه",
+"new_account" : "ليس لديك حساب ؟"
+
+
+
 }
