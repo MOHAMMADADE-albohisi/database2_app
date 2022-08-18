@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreftest().initPreferTest();
+  await SharedPrefController().initPreferTest();
   runApp(const database_app());
 }
 

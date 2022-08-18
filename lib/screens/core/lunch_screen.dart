@@ -18,7 +18,7 @@ class _lunch_screenState extends State<lunch_screen> {
       Duration(seconds: 3),
       () {
         bool loggedIn =
-            SharedPreftest().getValueFor<bool>(savedata.logedInd.name) ?? false;
+            SharedPrefController().getValueFor<bool>(savedata.logedInd.name) ?? false;
         String routes = loggedIn ? '/home_screen' : '/login_screen';
         Navigator.pushReplacementNamed(context, routes);
       },

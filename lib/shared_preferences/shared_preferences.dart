@@ -1,16 +1,17 @@
+// ignore_for_file: camel_case_types
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum savedata { language, email, logedInd }
 
-class SharedPreftest {
-  SharedPreftest._();
+class SharedPrefController {
+  SharedPrefController._();
 
   late SharedPreferences _sharedPreferences;
 
-  static SharedPreftest? _instancetest;
+  static SharedPrefController? _instancetest;
 
-  factory SharedPreftest() {
-    return _instancetest ??= SharedPreftest._();
+  factory SharedPrefController() {
+    return _instancetest ??= SharedPrefController._();
   }
 
   Future<void> initPreferTest() async {

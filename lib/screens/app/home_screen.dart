@@ -1,3 +1,4 @@
+// ignore_for_file: camel_case_types, use_build_context_synchronously
 import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,7 @@ class _home_screenState extends State<home_screen> {
               _confirmeLogoute();
               // Navigator.pushReplacementNamed(context, '/login_screen');
             },
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
@@ -86,8 +87,8 @@ class _home_screenState extends State<home_screen> {
     );
     if (test ?? false) {
       bool remove =
-          // await SharedPreftest().removeValueFor(savedata.logedInd.name);
-          await SharedPreftest().claer();
+          // await SharedPrefController().removeValueFor(savedata.logedInd.name);
+          await SharedPrefController().claer();
       if (remove) {
         Navigator.pushReplacementNamed(context, '/login_screen');
       }

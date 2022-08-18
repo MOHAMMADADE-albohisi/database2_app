@@ -27,7 +27,7 @@ class _login_screenState extends State<login_screen> with Helpers {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _language = SharedPreftest().getValueFor(savedata.language.name) ?? 'en';
+    _language = SharedPrefController().getValueFor(savedata.language.name) ?? 'en';
     _email = TextEditingController();
     _password = TextEditingController();
   }
@@ -230,7 +230,7 @@ class _login_screenState extends State<login_screen> with Helpers {
   }
 
   void login() {
-    SharedPreftest().saveemail(email: _email.text);
+    SharedPrefController().saveemail(email: _email.text);
     Navigator.pushReplacementNamed(context, '/home_screen');
   }
 }

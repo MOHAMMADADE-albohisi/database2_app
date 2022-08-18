@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class LanguageProvider extends ChangeNotifier {
   String language =
-      SharedPreftest().getValueFor<String>(savedata.language.name) ?? 'en';
+      SharedPrefController().getValueFor<String>(savedata.language.name) ?? 'en';
 
-  void changeLanguage(String Newlanguage) {
+  Future<void> changeLanguage(String Newlanguage) async {
     language = Newlanguage;
-    SharedPreftest().savelanguage(langchang: language);
+    SharedPrefController().savelanguage(langchang: language);
     notifyListeners();
   }
 }
