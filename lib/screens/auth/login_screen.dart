@@ -248,7 +248,7 @@ class _login_screenState extends State<login_screen> with Helpers {
     processResponse ProcessResponse = await UserDbController()
         .login(email: _email.text, password: _password.text);
     if (ProcessResponse.success) {
-      Navigator.pushReplacementNamed(context, '/home_screen');
+      Navigator.pushReplacementNamed(context, '/Products_Screen ');
     }
     context.showSnakBar(
       messageerroe: ProcessResponse.message,

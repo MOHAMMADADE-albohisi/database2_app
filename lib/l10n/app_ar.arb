@@ -15,8 +15,14 @@
 "register" : "انشاء حساب ",
 "register_title" : "إانشاء حساب جديد",
 "regester_subtitle": "ادخل البيانات ادناه",
-"new_account" : "ليس لديك حساب ؟"
-
+"new_account" : "ليس لديك حساب ؟",
+"products" : "المنتجات",
+"create_products" : "انشاء منتج جديد",
+"update_products" : "تعيدل المنتج",
+"ifo": "الوصف",
+"price": "السعر",
+"quantity": "الكمية",
+"save": "حفظ"
 
 
 }

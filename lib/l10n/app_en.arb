@@ -18,7 +18,15 @@
 "register_title" : "Create Account new...",
 "regester_subtitle": "Enter info below",
 
-"new_account": "Donut have a account ?"
+"new_account": "Donut have a account ?",
+"products" : "Products",
+"create_products" : "Create Products",
+"update_products" : "Update Products",
+"ifo": "Info",
+"price": "Price",
+"quantity": "Quantity",
+"save": "Save"
+
 
 
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-extension ContexHelper on BuildContext{
+extension ContexHelper on BuildContext {
   void showSnakBar({required String messageerroe, bool error = false}) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
@@ -14,5 +15,9 @@ extension ContexHelper on BuildContext{
         dismissDirection: DismissDirection.horizontal,
       ),
     );
+  }
+
+  AppLocalizations get localization {
+    return AppLocalizations.of(this)!;
   }
 }

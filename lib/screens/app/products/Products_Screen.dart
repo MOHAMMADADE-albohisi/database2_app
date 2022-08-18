@@ -1,31 +1,53 @@
 // ignore_for_file: camel_case_types, use_build_context_synchronously
 import 'package:database_app/shared_preferences/shared_preferences.dart';
+import 'package:database_app/snakbars/context_extenssion.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class home_screen extends StatefulWidget {
-  const home_screen({Key? key}) : super(key: key);
+class Products_Screen extends StatefulWidget {
+  const Products_Screen({Key? key}) : super(key: key);
 
   @override
-  State<home_screen> createState() => _home_screenState();
+  State<Products_Screen> createState() => _Products_ScreenState();
 }
 
-class _home_screenState extends State<home_screen> {
+class _Products_ScreenState extends State<Products_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.home),
+        title: Text(context.localization.products),
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.pushNamed(context, '/product_Screen');
+            },
+            icon: Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {
               _confirmeLogoute();
-              // Navigator.pushReplacementNamed(context, '/login_screen');
             },
             icon: const Icon(Icons.logout),
           ),
         ],
+      ),
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.shop),
+            title: Text('Titel'),
+            subtitle: Text('Titel'),
+            trailing: IconButton(
+              onPressed: () {
+                //
+              },
+              icon: Icon(Icons.delete),
+            ),
+          );
+        },
       ),
     );
   }

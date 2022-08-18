@@ -11,7 +11,7 @@ class page_textfilde_widget extends StatelessWidget {
     required this.controller,
     this.colorss = Colors.grey,
     this.suffixIcon,
-    required this.showpasssword,
+     this.showpasssword = false,
   }) : super(key: key);
 
   final String hint;

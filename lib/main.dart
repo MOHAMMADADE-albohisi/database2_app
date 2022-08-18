@@ -1,7 +1,8 @@
 // ignore_for_file: camel_case_types
 import 'package:database_app/database/db_controller.dart';
 import 'package:database_app/provider/language_provider.dart';
-import 'package:database_app/screens/app/home_screen.dart';
+import 'package:database_app/screens/app/products/Products_Screen.dart';
+import 'package:database_app/screens/app/products/product_screen.dart';
 import 'package:database_app/screens/auth/login_screen.dart';
 import 'package:database_app/screens/auth/regester_screen.dart';
 import 'package:database_app/screens/core/lunch_screen.dart';
@@ -67,7 +68,8 @@ class database_app extends StatelessWidget {
                 '/lunch_screen': (context) => const lunch_screen(),
                 '/login_screen': (context) => const login_screen(),
                 '/register_screen': (context) => const register_screen(),
-                '/home_screen': (context) => const home_screen(),
+                '/Products_Screen ': (context) => const Products_Screen(),
+                '/product_Screen': (context) => const Product_Screen(),
               },
             );
           },
