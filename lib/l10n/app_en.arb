@@ -25,7 +25,8 @@
 "ifo": "Info",
 "price": "Price",
 "quantity": "Quantity",
-"save": "Save"
+"save": "Save",
+"error_data" : "Enter required Data"
 
 
 

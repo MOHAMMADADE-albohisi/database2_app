@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:database_app/database/controllers/user_db_controller.dart';
 import 'package:database_app/models/process_response.dart';
 import 'package:database_app/models/user.dart';
@@ -10,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 // ignore: camel_case_types
 class register_screen extends StatefulWidget {
@@ -51,7 +48,7 @@ class _register_screenState extends State<register_screen> with Helpers {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.register),
-        actions: [],
+        actions: const [],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
@@ -142,9 +139,11 @@ class _register_screenState extends State<register_screen> with Helpers {
 
   Future<void> _register() async {
     /// TODO: Call database register function
+    // ignore: non_constant_identifier_names
     processResponse ProcessResponse =
         await UserDbController().register(user: user);
     if (ProcessResponse.success) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     }
     // ignore: use_build_context_synchronously

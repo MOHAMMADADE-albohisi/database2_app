@@ -30,8 +30,7 @@ class _login_screenState extends State<login_screen> with Helpers {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _language =
-        SharedPrefController().getValueFor(savedata.language.name) ?? 'en';
+    _language = SharedPrefController().getValueFor(savedata.language.name) ?? 'en';
     _email = TextEditingController();
     _password = TextEditingController();
   }
@@ -245,11 +244,14 @@ class _login_screenState extends State<login_screen> with Helpers {
   }
 
   void login() async {
+    // ignore: non_constant_identifier_names
     processResponse ProcessResponse = await UserDbController()
         .login(email: _email.text, password: _password.text);
     if (ProcessResponse.success) {
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacementNamed(context, '/Products_Screen ');
     }
+    // ignore: use_build_context_synchronously
     context.showSnakBar(
       messageerroe: ProcessResponse.message,
       error: !ProcessResponse.success,

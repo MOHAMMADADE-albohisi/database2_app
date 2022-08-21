@@ -1,9 +1,13 @@
 // ignore_for_file: camel_case_types, use_build_context_synchronously
+import 'package:database_app/models/process_response.dart';
+import 'package:database_app/provider/product_provider.dart';
+import 'package:database_app/screens/app/products/product_screen.dart';
 import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:database_app/snakbars/context_extenssion.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class Products_Screen extends StatefulWidget {
   const Products_Screen({Key? key}) : super(key: key);
@@ -14,6 +18,13 @@ class Products_Screen extends StatefulWidget {
 
 class _Products_ScreenState extends State<Products_Screen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<ProductProvider>(context, listen: false).read();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -21,9 +32,12 @@ class _Products_ScreenState extends State<Products_Screen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/product_Screen');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Product_Screen()),
+              );
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
           IconButton(
             onPressed: () {
@@ -33,27 +47,62 @@ class _Products_ScreenState extends State<Products_Screen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Icon(Icons.shop),
-            title: Text('Titel'),
-            subtitle: Text('Titel'),
-            trailing: IconButton(
-              onPressed: () {
-                //
-              },
-              icon: Icon(Icons.delete),
+      body: Consumer<ProductProvider>(
+          builder: (context, ProductProvider value, child) {
+        if (value.products.isNotEmpty) {
+          return ListView.builder(
+            itemCount: value.products.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: const Icon(Icons.shop),
+                title: Text(value.products[index].name),
+                subtitle: Text(value.products[index].info),
+                trailing: SizedBox(
+                  width: 100,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => _deletProduct(index),
+                        icon: const Icon(Icons.delete),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_shopping_cart_outlined),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Product_Screen(
+                        product: value.products[index],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        } else {
+          return Center(
+            child: Text(
+              'NO DATA',
+              style: GoogleFonts.cairo(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black54,
+              ),
             ),
           );
-        },
-      ),
+        }
+      }),
     );
   }
 
   void _confirmeLogoute() async {
-    bool? test = await showDialog<bool>(
+    bool? result = await showDialog<bool>(
       //***********************************************
       //لعدم اغلاق الايقونة من الضغط خارجها
       // barrierDismissible: false,
@@ -107,7 +156,8 @@ class _Products_ScreenState extends State<Products_Screen> {
         );
       },
     );
-    if (test ?? false) {
+
+    if (result ?? false) {
       bool remove =
           // await SharedPrefController().removeValueFor(savedata.logedInd.name);
           await SharedPrefController().claer();
@@ -115,5 +165,17 @@ class _Products_ScreenState extends State<Products_Screen> {
         Navigator.pushReplacementNamed(context, '/login_screen');
       }
     }
+  }
+
+  void _deletProduct(int index) async {
+    // ignore: non_constant_identifier_names
+    processResponse Respons =
+        await Provider.of<ProductProvider>(context, listen: false)
+            .delete(index);
+
+    context.showSnakBar(
+      messageerroe: Respons.message,
+      error: !Respons.success,
+    );
   }
 }

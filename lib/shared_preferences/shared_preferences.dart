@@ -2,7 +2,7 @@
 import 'package:database_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum savedata { language, name, email, logedInd }
+enum savedata { language, id, name, email, logedInd }
 
 class SharedPrefController {
   SharedPrefController._();
@@ -21,11 +21,12 @@ class SharedPrefController {
 
   void save({required User user}) {
     _sharedPreferences.setBool(savedata.logedInd.name, true);
+    _sharedPreferences.setInt(savedata.id.name, user.id);
     _sharedPreferences.setString(savedata.name.name, user.name);
     _sharedPreferences.setString(savedata.email.name, user.email);
   }
 
-  void savelanguage({required String langchang}) {  
+  void savelanguage({required String langchang}) {
     _sharedPreferences.setString(savedata.language.name, langchang);
   }
 
