@@ -36,7 +36,7 @@ class DbController {
             'id INTEGER PRIMARY KEY AUTOINCREMENT,'
             'name TEXT NOT NULL,'
             'info TEXT NOT NULL,'
-            'price TEXT NOT NULL,'
+            'price REAL NOT NULL,'
             'quantity INTEGER DEFAULT (0),'
             'user_id INTEGER,'
             'FOREIGN KEY (user_id) references user(id)'

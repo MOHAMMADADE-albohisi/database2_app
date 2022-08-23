@@ -1,5 +1,6 @@
 import 'package:database_app/database/db_oprations.dart';
 import 'package:database_app/models/product.dart';
+import 'package:database_app/shared_preferences/shared_preferences.dart';
 
 class ProductDbController extends DbOperations<Product> {
   @override
@@ -27,8 +28,9 @@ class ProductDbController extends DbOperations<Product> {
 
   @override
   Future<List<Product>> read() async {
-    List<Map<String, dynamic>> rowsMap =
-        await database.query(Product.tableName);
+    int useId = SharedPrefController().getValueFor<int>(savedata.id.name)!;
+    List<Map<String, dynamic>> rowsMap = await database
+        .query(Product.tableName, where: 'user_id = ?', whereArgs: [useId]);
     return rowsMap.map((rowsMap) => Product.fromMap(rowsMap)).toList();
   }
 
