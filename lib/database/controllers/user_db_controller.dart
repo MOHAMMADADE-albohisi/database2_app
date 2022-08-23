@@ -33,7 +33,7 @@ class UserDbController {
     // FIRST: ROW INSERT (SQL)
     // int newRowId = await _database.rawInsert(
     //      'INSERT INFO users (name, email, password) VALUES (?, ?, ?)',
-    //      [user.name, user.email, user.password]);
+    //      [user.name, user.email, user.password],);
     //**************************************************************
     //SCANNED :INSERT
 

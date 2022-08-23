@@ -1,6 +1,3 @@
-
-
-
 // ignore: camel_case_types
 class processResponse {
   final bool success;
