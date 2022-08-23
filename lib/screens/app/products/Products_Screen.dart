@@ -1,5 +1,8 @@
 // ignore_for_file: camel_case_types, use_build_context_synchronously
+import 'package:database_app/models/cart.dart';
 import 'package:database_app/models/process_response.dart';
+import 'package:database_app/models/product.dart';
+import 'package:database_app/provider/cart_provider.dart';
 import 'package:database_app/provider/product_provider.dart';
 import 'package:database_app/screens/app/products/product_screen.dart';
 import 'package:database_app/shared_preferences/shared_preferences.dart';
@@ -21,6 +24,7 @@ class _Products_ScreenState extends State<Products_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<CartProvider>(context, listen: false).read();
     Provider.of<ProductProvider>(context, listen: false).read();
   }
 
@@ -47,6 +51,12 @@ class _Products_ScreenState extends State<Products_Screen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/cart_screen');
+        },
+        child: Icon(Icons.shopping_cart),
+      ),
       body: Consumer<ProductProvider>(
           builder: (context, ProductProvider value, child) {
         if (value.products.isNotEmpty) {
@@ -66,7 +76,12 @@ class _Products_ScreenState extends State<Products_Screen> {
                         icon: const Icon(Icons.delete),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<CartProvider>(context, listen: false)
+                              .create(
+                            getCart(value.products[index]),
+                          );
+                        },
                         icon: const Icon(Icons.add_shopping_cart_outlined),
                       ),
                     ],
@@ -99,6 +114,17 @@ class _Products_ScreenState extends State<Products_Screen> {
         }
       }),
     );
+  }
+
+  Cart getCart(Product product) {
+    Cart cart = Cart();
+    cart.productId = product.id;
+    cart.price = product.price;
+    cart.total = product.price;
+    cart.userId = SharedPrefController().getValueFor<int>(savedata.id.name)!;
+    cart.count = 1;
+    cart.productName = product.name;
+    return cart;
   }
 
   void _confirmeLogoute() async {

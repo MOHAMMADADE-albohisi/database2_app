@@ -1,7 +1,9 @@
 // ignore_for_file: camel_case_types
 import 'package:database_app/database/db_controller.dart';
+import 'package:database_app/provider/cart_provider.dart';
 import 'package:database_app/provider/language_provider.dart';
 import 'package:database_app/provider/product_provider.dart';
+import 'package:database_app/screens/app/cart/cart_screen.dart';
 import 'package:database_app/screens/app/products/Products_Screen.dart';
 import 'package:database_app/screens/auth/login_screen.dart';
 import 'package:database_app/screens/auth/regester_screen.dart';
@@ -36,6 +38,8 @@ class database_app extends StatelessWidget {
                   create: (context) => LanguageProvider()),
               ChangeNotifierProvider<ProductProvider>(
                   create: (context) => ProductProvider()),
+              ChangeNotifierProvider<CartProvider>(
+                  create: (context) => CartProvider()),
             ],
             builder: (context, widget) {
               return MaterialApp(
@@ -74,7 +78,7 @@ class database_app extends StatelessWidget {
                   '/login_screen': (context) => const login_screen(),
                   '/register_screen': (context) => const register_screen(),
                   '/Products_Screen ': (context) => const Products_Screen(),
-                  // '/product_Screen': (context) => const Product_Screen(),
+                  '/cart_screen': (context) => const CartScreen(),
                 },
               );
             });

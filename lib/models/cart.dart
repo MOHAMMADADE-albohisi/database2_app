@@ -5,6 +5,7 @@ class Cart {
   late int count;
   late int userId;
   late int productId;
+  late String productName;
 
   static const String tableName = 'cart';
 
@@ -17,6 +18,7 @@ class Cart {
     price = rowMap['price'];
     userId = rowMap['user_id'];
     productId = rowMap['product_id'];
+    productName = rowMap['name'];
   }
 
   Map<String, dynamic> toMap() {

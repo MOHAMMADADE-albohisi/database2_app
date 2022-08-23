@@ -13,4 +13,6 @@ abstract class DbOperations<Model> {
   Future<bool> update(Model model);
 
   Future<bool> delete(int id);
+//دالة الحدف الكامل لجميع العناصر دالة اختيارة وليست اجباية
+  Future<void> clear() async {}
 }
