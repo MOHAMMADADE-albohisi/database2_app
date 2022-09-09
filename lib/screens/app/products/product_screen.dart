@@ -1,14 +1,15 @@
 // ignore_for_file: camel_case_types
+import 'package:database_app/get/product_getx_contorller.dart';
 import 'package:database_app/models/process_response.dart';
 import 'package:database_app/models/product.dart';
-import 'package:database_app/provider/product_provider.dart';
+
 import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:database_app/snakbars/context_extenssion.dart';
 import 'package:database_app/widgets/test_filde_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+
 
 class Product_Screen extends StatefulWidget {
   const Product_Screen({Key? key, this.product}) : super(key: key);
@@ -139,10 +140,8 @@ class _Product_ScreenState extends State<Product_Screen> {
 
     // ignore: non_constant_identifier_names
     processResponse ProcessResponse = isUpdateProduct
-        ? await Provider.of<ProductProvider>(context, listen: false)
-            .update(product)
-        : await Provider.of<ProductProvider>(context, listen: false)
-            .create(product);
+        ? await ProductGetxController.to.updateNote(product)
+        : await ProductGetxController.to.create(product);
     if (ProcessResponse.success) {
       clear();
     }

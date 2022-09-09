@@ -1,22 +1,11 @@
-import 'package:database_app/provider/cart_provider.dart';
+import 'package:database_app/get/cart_getx_contorller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
-
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<CartProvider>(context, listen: false).read();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +15,20 @@ class _CartScreenState extends State<CartScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Provider.of<CartProvider>(context, listen: false).clear();
+              CartGetxContriller.to.clear();
             },
             icon: const Icon(Icons.delete_outline),
           )
         ],
       ),
-      body: Consumer<CartProvider>(
-        builder: (context, CartProvider value, child) {
-          if (value.cartsItems.isNotEmpty) {
+      body: GetX<CartGetxContriller>(
+        builder: (CartGetxContriller controller) {
+          if (controller.cartsItems.isNotEmpty) {
             return Column(
               children: [
                 Expanded(
                     child: ListView.builder(
-                  itemCount: value.cartsItems.length,
+                  itemCount: controller.cartsItems.length,
                   itemBuilder: (context, index) {
                     return Container(
                       height: 90,
@@ -67,9 +56,7 @@ class _CartScreenState extends State<CartScreen> {
                             top: 0,
                             child: IconButton(
                               onPressed: () {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .changeQuantity(index, 0);
+                                CartGetxContriller.to.changeQuantity(index, 0);
                               },
                               icon: const Icon(Icons.close),
                               color: Colors.red,
@@ -85,14 +72,14 @@ class _CartScreenState extends State<CartScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      value.cartsItems[index].productName,
+                                      controller.cartsItems[index].productName,
                                       style: GoogleFonts.cairo(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.sp,
                                       ),
                                     ),
                                     Text(
-                                      'Quantity: ${value.cartsItems[index].count} - Total: ${value.cartsItems[index].total}',
+                                      'Quantity: ${controller.cartsItems[index].count} - Total: ${controller.cartsItems[index].total}',
                                       style: GoogleFonts.cairo(
                                         fontWeight: FontWeight.w300,
                                         fontSize: 12.sp,
@@ -106,23 +93,19 @@ class _CartScreenState extends State<CartScreen> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      Provider.of<CartProvider>(context,
-                                              listen: false)
-                                          .changeQuantity(
-                                              index,
-                                              value.cartsItems[index].count +
-                                                  1);
+                                      CartGetxContriller.to.changeQuantity(
+                                          index,
+                                          controller.cartsItems[index].count +
+                                              1);
                                     },
                                     icon: const Icon(Icons.add),
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                      Provider.of<CartProvider>(context,
-                                              listen: false)
-                                          .changeQuantity(
-                                              index,
-                                              value.cartsItems[index].count -
-                                                  1);
+                                      CartGetxContriller.to.changeQuantity(
+                                          index,
+                                          controller.cartsItems[index].count -
+                                              1);
                                     },
                                     icon: const Icon(Icons.remove),
                                   ),
@@ -150,7 +133,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           const Spacer(),
                           Text(
-                            value.total.toString(),
+                            controller.total.toString(),
                             style: GoogleFonts.cairo(
                                 fontSize: 15.sp, fontWeight: FontWeight.bold),
                           )
@@ -166,7 +149,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           const Spacer(),
                           Text(
-                            value.quantity.toString(),
+                            controller.quantity.toString(),
                             style: GoogleFonts.cairo(
                                 fontSize: 15.sp, fontWeight: FontWeight.bold),
                           )

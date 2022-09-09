@@ -31,6 +31,7 @@ class CartDbController extends DbOperations<Cart> {
         'SELECT cart.id, cart.product_id, cart.count, cart.total, cart.price, cart.user_id, products.name '
         'FROM cart JOIN products ON cart.product_id  = products.id '
         'WHERE cart.user_id = ?',[userId]);
+    print(rowsMap);
     return rowsMap.map((rowMap) => Cart.fromMap(rowMap)).toList();
   }
 

@@ -1,4 +1,5 @@
 import 'package:database_app/database/controllers/user_db_controller.dart';
+import 'package:database_app/get/language_getx_contorller.dart';
 import 'package:database_app/models/process_response.dart';
 import 'package:database_app/provider/language_provider.dart';
 import 'package:database_app/shared_preferences/shared_preferences.dart';
@@ -222,8 +223,7 @@ class _login_screenState extends State<login_screen> with Helpers {
 
     if (langchangetest != null) {
       Future.delayed(const Duration(milliseconds: 500), () {
-        Provider.of<LanguageProvider>(context, listen: false)
-            .changeLanguage(langchangetest);
+        LanguageGetxController.to.changeLanguage(langchangetest);
       });
     }
   }

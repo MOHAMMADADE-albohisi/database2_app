@@ -1,32 +1,23 @@
 // ignore_for_file: camel_case_types, use_build_context_synchronously
+import 'package:database_app/get/cart_getx_contorller.dart';
+import 'package:database_app/get/product_getx_contorller.dart';
 import 'package:database_app/models/cart.dart';
 import 'package:database_app/models/process_response.dart';
 import 'package:database_app/models/product.dart';
-import 'package:database_app/provider/cart_provider.dart';
-import 'package:database_app/provider/product_provider.dart';
 import 'package:database_app/screens/app/products/product_screen.dart';
 import 'package:database_app/shared_preferences/shared_preferences.dart';
 import 'package:database_app/snakbars/context_extenssion.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
-class Products_Screen extends StatefulWidget {
-  const Products_Screen({Key? key}) : super(key: key);
+class products_screen extends StatelessWidget {
+  /*const*/ products_screen({Key? key}) : super(key: key);
 
-  @override
-  State<Products_Screen> createState() => _Products_ScreenState();
-}
-
-class _Products_ScreenState extends State<Products_Screen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Provider.of<CartProvider>(context, listen: false).read();
-    Provider.of<ProductProvider>(context, listen: false).read();
-  }
+  // final ProductGetxController controller = Get.put<ProductGetxController>(ProductGetxController());
+  final CartGetxContriller controller =
+      Get.put<CartGetxContriller>(CartGetxContriller());
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +36,7 @@ class _Products_ScreenState extends State<Products_Screen> {
           ),
           IconButton(
             onPressed: () {
-              _confirmeLogoute();
+              _confirmeLogoute(context);
             },
             icon: const Icon(Icons.logout),
           ),
@@ -55,64 +46,65 @@ class _Products_ScreenState extends State<Products_Screen> {
         onPressed: () {
           Navigator.pushNamed(context, '/cart_screen');
         },
-        child: Icon(Icons.shopping_cart),
+        child: const Icon(Icons.shopping_cart),
       ),
-      body: Consumer<ProductProvider>(
-          builder: (context, ProductProvider value, child) {
-        if (value.products.isNotEmpty) {
-          return ListView.builder(
-            itemCount: value.products.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: const Icon(Icons.shop),
-                title: Text(value.products[index].name),
-                subtitle: Text(value.products[index].info),
-                trailing: SizedBox(
-                  width: 100,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => _deletProduct(index),
-                        icon: const Icon(Icons.delete),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Provider.of<CartProvider>(context, listen: false)
-                              .create(
-                            getCart(value.products[index]),
-                          );
-                        },
-                        icon: const Icon(Icons.add_shopping_cart_outlined),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Product_Screen(
-                        product: value.products[index],
-                      ),
+      body: GetBuilder<ProductGetxController>(
+        init: ProductGetxController(),
+        global: true,
+        builder: (ProductGetxController controller) {
+          if (controller.products.isNotEmpty) {
+            return ListView.builder(
+              itemCount: controller.products.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: const Icon(Icons.shop),
+                  title: Text(controller.products[index].name),
+                  subtitle: Text(controller.products[index].info),
+                  trailing: SizedBox(
+                    width: 100,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () => _deletProduct(context, index),
+                          icon: const Icon(Icons.delete),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            CartGetxContriller.to
+                                .create(getCart(controller.products[index]));
+                          },
+                          icon: const Icon(Icons.add_shopping_cart_outlined),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              );
-            },
-          );
-        } else {
-          return Center(
-            child: Text(
-              'NO DATA',
-              style: GoogleFonts.cairo(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black54,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Product_Screen(
+                          product: controller.products[index],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Text(
+                'NO DATA',
+                style: GoogleFonts.cairo(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54,
+                ),
               ),
-            ),
-          );
-        }
-      }),
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -127,7 +119,7 @@ class _Products_ScreenState extends State<Products_Screen> {
     return cart;
   }
 
-  void _confirmeLogoute() async {
+  void _confirmeLogoute(BuildContext context) async {
     bool? result = await showDialog<bool>(
       //***********************************************
       //لعدم اغلاق الايقونة من الضغط خارجها
@@ -188,16 +180,17 @@ class _Products_ScreenState extends State<Products_Screen> {
           // await SharedPrefController().removeValueFor(savedata.logedInd.name);
           await SharedPrefController().claer();
       if (remove) {
+        Get.delete<ProductGetxController>();
+        Get.delete<CartGetxContriller
+        >();
         Navigator.pushReplacementNamed(context, '/login_screen');
       }
     }
   }
 
-  void _deletProduct(int index) async {
+  void _deletProduct(BuildContext context, int index) async {
     // ignore: non_constant_identifier_names
-    processResponse Respons =
-        await Provider.of<ProductProvider>(context, listen: false)
-            .delete(index);
+    processResponse Respons = await ProductGetxController.to.delete(index);
 
     context.showSnakBar(
       messageerroe: Respons.message,
